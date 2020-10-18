@@ -12,6 +12,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import android.content.Intent;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
@@ -23,12 +24,18 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
-  MethodChannel channel;
+  private MethodChannel channel;
   private Context context;
   
   public static void registerWith(final Registrar registrar) {
         final MethodChannel channel = new MethodChannel(flutterPluginBinding.messenger(), "flutter_intent");
         channel.setMethodCallHandler(new FlutterIntentPlugin(channel, registrar.activeContext()));
+    }
+  
+  private FlutterIntentPlugin(final MethodChannel channel, Context context) {
+        this.channel = channel;
+        this.channel.setMethodCallHandler(this);
+        this.context = context;
     }
 
   @Override
