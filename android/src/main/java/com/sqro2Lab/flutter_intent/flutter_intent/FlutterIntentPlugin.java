@@ -38,7 +38,7 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
         this.context = context;
     }
   
-  public AudioplayersPlugin() {}
+  public FlutterIntentPlugin() {}
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
