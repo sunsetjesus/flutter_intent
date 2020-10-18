@@ -28,7 +28,7 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
   private Context context;
   
   public static void registerWith(final Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(flutterPluginBinding.messenger(), "flutter_intent");
+        final MethodChannel channel = new MethodChannel(registrar.messenger(),"flutter_intent");
         channel.setMethodCallHandler(new FlutterIntentPlugin(channel, registrar.activeContext()));
     }
   
@@ -37,6 +37,8 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
         this.channel.setMethodCallHandler(this);
         this.context = context;
     }
+  
+  public AudioplayersPlugin() {}
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
