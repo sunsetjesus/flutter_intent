@@ -23,8 +23,13 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
-  private MethodChannel channel;
+  MethodChannel channel;
   private Context context;
+  
+  public static void registerWith(final Registrar registrar) {
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_intent");
+        channel.setMethodCallHandler(new FlutterIntentPlugin(channel, registrar.activeContext()));
+    }
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
