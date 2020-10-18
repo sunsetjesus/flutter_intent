@@ -1,0 +1,72 @@
+package com.sqro2Lab.flutter_intent.flutter_intent;
+
+import androidx.annotation.NonNull;
+
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.plugin.common.PluginRegistry.Registrar;
+
+/** FlutterIntentPlugin */
+public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
+  /// The MethodChannel that will the communication between Flutter and native Android
+  ///
+  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+  /// when the Flutter Engine is detached from the Activity
+  private MethodChannel channel;
+  private Context context;
+
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_intent");
+    channel.setMethodCallHandler(this);
+    context = flutterPluginBinding.getApplicationContext();
+  }
+
+  @Override
+  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    switch(call.method){
+      case "openApp":
+      String packageName = call.argument("package_name").toString();
+      result.success(openApp(packageName));
+      break;
+      case "getPlatformVersion":
+      result.success("Android " + android.os.Build.VERSION.RELEASE);
+      break;
+      default:
+      result.notImplemented();
+
+          
+    }
+
+
+    // if (call.method.equals("getPlatformVersion")) {
+    //   result.success("Android " + android.os.Build.VERSION.RELEASE);
+    // } else {
+    //   result.notImplemented();
+    // }
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
+    context = null;
+  }
+
+
+  private boolean openApp(@NonNull String appId) {
+    Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(appId);
+
+    // Null pointer check in case package name was not found
+    if (launchIntent != null) {
+        context.startActivity(launchIntent);
+        return true;
+    }
+
+    return false;
+}
+
+
+}
