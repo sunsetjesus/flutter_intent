@@ -27,7 +27,7 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
   private Context context;
   
   public static void registerWith(final Registrar registrar) {
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_intent");
+        final MethodChannel channel = new MethodChannel(flutterPluginBinding.messenger(), "flutter_intent");
         channel.setMethodCallHandler(new FlutterIntentPlugin(channel, registrar.activeContext()));
     }
 
