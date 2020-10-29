@@ -52,7 +52,8 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
     switch(call.method){
       case "openApp":
       String packageName = call.argument("appId").toString();
-      openApp(packageName);
+      String targetActivity = call.argument("targetActivity").toString();
+      openApp(packageName,targetActivity);
       break;
       case "getPlatformVersion":
       result.success("Android " + android.os.Build.VERSION.RELEASE);
