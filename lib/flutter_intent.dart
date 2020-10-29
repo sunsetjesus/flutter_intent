@@ -10,7 +10,7 @@ class FlutterIntent {
     return version;
   }
 
-  static Future<void> openApp(String appId) async {
-    await _channel.invokeMapMethod('openApp', {"appId": appId});
+  static Future<void> openApp(String appId, String targetActivity) async {
+    await _channel.invokeMapMethod('openApp', {"appId": appId,"targetActivity": targetActivity});
   }
 }
