@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import android.content.Intent;
+import android.content.ComponentName;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
