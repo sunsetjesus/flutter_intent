@@ -78,13 +78,19 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
   }
 
 
-  private int openApp(@NonNull String appId) {
-    Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(appId);
+  private int openApp(@NonNull String appId, @NonNull String targetActivity) {
+   // Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(appId);
 
     // Null pointer check in case package name was not found
-    if (launchIntent != null) {
-        context.startActivity(launchIntent);
-    }
+    //if (launchIntent != null) {
+    //    context.startActivity(launchIntent);
+    //}
+    
+    Intent intent = new Intent(Intent.ACTION_MAIN);
+    ComponentName componentName = new ComponentName(appId, targetActivity);
+    intent.setComponent(componentName);
+    startActivity(intent);
+    
     return 0;
 
 }
