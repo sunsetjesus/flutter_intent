@@ -89,6 +89,7 @@ public class FlutterIntentPlugin implements FlutterPlugin, MethodCallHandler {
     //}
     
     Intent intent = new Intent(Intent.ACTION_MAIN);
+    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     ComponentName componentName = new ComponentName(appId, targetActivity);
     intent.setComponent(componentName);
     context.startActivity(intent);
